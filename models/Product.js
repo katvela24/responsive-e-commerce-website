@@ -1,7 +1,8 @@
 // import important parts of sequelize library
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, DECIMAL } = require('sequelize');
 // import our database connection from config.js
 const sequelize = require('../config/connection');
+const Category = require('./Category');
 
 // Initialize Product model (table) by extending off Sequelize's Model class
 class Product extends Model { }
@@ -17,17 +18,35 @@ Product.init(
 
     price: {
       type: DataTypes.FLOAT,
-      allowNull: false
+      allowNull: false,
+      validate: {
+       isDecimal: {
+        msg: "Price must include a decimal"
+       }
+      }
     },
 
     stock: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      defaultValue: 10,
+      validate: {
+        isNumeric: {
+         msg: "Stock must be an integer"
+        }
+      }
     },
 
     category_id: {
       type: DataTypes.INTEGER,
+      allowNull: false
+    },
+
+      id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
     }
 
   },
@@ -40,5 +59,16 @@ Product.init(
     modelName: 'product',
   }
 );
+
+// Product.belongsTo(Category, {
+//   foreignKey: "category_id",
+//   as: "id"
+// }),
+
+// Category.hasMany(Product, {
+//   foreignKey: "id",
+//   as: "product_id"
+// }),
+
 
 module.exports = Product;

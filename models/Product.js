@@ -39,7 +39,11 @@ Product.init(
 
     category_id: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "category",
+        key: "id"
+      }
     },
 
       id: {
@@ -59,16 +63,6 @@ Product.init(
     modelName: 'product',
   }
 );
-
-// Product.belongsTo(Category, {
-//   foreignKey: "category_id",
-//   as: "id"
-// }),
-
-// Category.hasMany(Product, {
-//   foreignKey: "id",
-//   as: "product_id"
-// }),
 
 
 module.exports = Product;

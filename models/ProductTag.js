@@ -11,13 +11,28 @@ ProductTag.init(
     // define columns
     product_id: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "product",
+        key: "id"
+      }
     },
 
     tag_id: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: "tag",
+        key: "id"
+      }
     },
+
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    }
   },
   {
     sequelize,
@@ -27,18 +42,5 @@ ProductTag.init(
     modelName: "product_tag"
   }
 );
-
-// Product.belongsTo(Tag, {
-//   through: ProductTag,
-//   foreignKey: "id",
-//   as: "tag_id"
-// }),
-
-//   Tag.hasMany(Product, {
-//     through: ProductTag,
-//     foreignKey: "product_id",
-//     as: "product"
-//   }),
-
 
   module.exports = ProductTag;
